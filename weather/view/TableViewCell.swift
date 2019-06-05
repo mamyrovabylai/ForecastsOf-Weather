@@ -16,7 +16,7 @@ class TableViewCell: UITableViewCell {
     @IBOutlet weak var highestTempLabel: UILabel!
     @IBOutlet weak var lowestTempLabel: UILabel!
     
-    func updateUI(weatherModel: weatherModel){
+    func updateUI(weatherModel: WeatherModel){
         dayLabel.text = weatherModel.day
         descriptionLabel.text = weatherModel.description
         highestTempLabel.text = weatherModel.max

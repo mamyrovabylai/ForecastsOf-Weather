@@ -17,8 +17,8 @@ class WeatherVC: UIViewController ,UITableViewDelegate, UITableViewDataSource, C
     @IBOutlet weak var currentTempImage: UIImageView!
     @IBOutlet weak var currentDescriptionLabel: UILabel!
     @IBOutlet weak var tableView: TableView!
-    var weatherModels:[weatherModel] = []
-    var weatherModel: weatherModel!
+    var weatherModels:[WeatherModel] = []
+    var weatherModel: WeatherModel!
     
     
     var currentWeather = CurrentWeather()
@@ -64,10 +64,10 @@ class WeatherVC: UIViewController ,UITableViewDelegate, UITableViewDataSource, C
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return NUMBER_KEY
+        return weatherModels.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as? TableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "idForCell", for: indexPath) as? TableViewCell {
             weatherModels[indexPath.row].downloadDetails(index: indexPath.row, completed: {
                 
                 cell.updateUI(weatherModel: self.weatherModels[indexPath.row])
@@ -91,14 +91,14 @@ class WeatherVC: UIViewController ,UITableViewDelegate, UITableViewDataSource, C
         currentTempImage.image = UIImage(named: currentWeather.description)
     }
     // forecast Data
-    func downloadForecast(completed: Completion){
-        Alamofire.request(url).responseJSON(completionHandler: { (response) in
+    func downloadForecast(completed: @escaping Completion){
+        Alamofire.request(forecastURLString).responseJSON(completionHandler: { (response) in
             let result = response.result
             if let dict = result.value as? [String: Any]{
                 if let list = dict["list"] as? [[String: Any]]{
                     for obj in list {
-                        weatherModel = WeathreModel(obj: obj)
-                        self.weatherModels.append(weatherModel)
+                        self.weatherModel = WeatherModel(list: obj)
+                        self.weatherModels.append(self.weatherModel)
                     }
                 }
             }

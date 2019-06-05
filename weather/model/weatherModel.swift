@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class weatherModel {
+class WeatherModel {
     private var _day: String!
     private var _maxTemp: String!
     private var _minTemp: String!
