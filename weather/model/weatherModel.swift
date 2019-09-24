@@ -65,6 +65,7 @@ class WeatherModel {
             self._day = dateFormatter.string(from: unixDate)
         }
     }
+    
     func downloadDetails(index: Int,completed : @escaping Completion){
         let  url = URL(string: forecastURLString)!
         Alamofire.request(url).responseJSON(completionHandler: { (response) in
